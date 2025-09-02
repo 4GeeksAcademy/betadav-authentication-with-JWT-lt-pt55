@@ -37,7 +37,7 @@ MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
 # Setup the Flask-JWT-Extended extension
-app.config["JWT_SECRET_KEY"] = "super-secret, more characters are better and safer"  # Change this!
+app.config["JWT_SECRET_KEY"] = "super-secret, more characters are better and safer for users security"  # Change this!
 jwt = JWTManager(app)
 
 # add the admin
@@ -81,32 +81,6 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
     return response
-
-@app.route("/login", methods=["POST"])
-def login():
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-
-    user = User.query.filter_by(email = email).first()
-    print(user)
-    if password != user.password:
-        return jsonify({"msg": "Bad username or password"}), 401
-
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
-
-@app.route("/signup", methods=["POST"])
-def sign_up():
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-
-    user = User.query.filter_by(email = email).first()
-    print(user)
-    if password == None:
-        return jsonify({"msg": "Bad username or password"}), 401
-
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
 
 
 # this only runs if `$ python src/main.py` is executed
