@@ -32,6 +32,9 @@ def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
+    if not email or not password:
+        return jsonify({"msg": "email and password required"}), 401
+
     user = User.query.filter_by(email=email).first()
     if user is None:
         return jsonify({"msg": "Bad username or password"}), 401
@@ -55,8 +58,6 @@ def sign_up():
     db.session.add(user)
     db.session.commit()
 
-    response_body = {
-        "msg": "User " + user.email + " successfully create"
-    }
+    access_token = create_access_token(identity=body["email"])
 
-    return jsonify(response_body), 200
+    return jsonify(access_token=access_token), 200

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link, Navigate } from "react-router-dom";
 
 
 const Form = () =>{
@@ -52,7 +53,17 @@ const Form = () =>{
                 <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                 <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" className="form-control" id="exampleInputPassword1"/>
             </div>
-            <button type="submit" onClick={sendData} className="btn btn-primary">Submit</button>
+            <div className="d-flex align-content-around">
+                <div className="col-6">
+                    <button type="submit" onClick={sendData} className="btn btn-primary">Submit</button>
+                </div>
+                <div className="col-6">
+                    <Link to="/signup">
+                        <button className="btn btn-warning">Sign Up</button>
+                    </Link>
+                </div>
+            </div>
+            
         </form>
     );
 }

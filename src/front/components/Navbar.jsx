@@ -21,12 +21,9 @@ export const Navbar = () => {
 			<div className="container">
 				<Link to="/">
 					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				{ store.auth ? <button className="btn btn-primary" onClick={logout}>Logout</button> : null }
+				</Link>				
 				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+					{ store.auth ? <button className="btn btn-primary" onClick={logout}>Logout</button> : null }
 				</div>
 			</div>
 		</nav>
