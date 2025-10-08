@@ -48,6 +48,11 @@ def login():
 @api.route("/signup", methods=["POST"])
 def sign_up():
     body = request.get_json()
+    required_fields = ["email", "password"]
+
+    for field in required_fields:
+        if field not in body or not body[field]:
+            return jsonify({"msg": f"'{field}' is required."}), 400
 
     user = User.query.filter_by(email=body["email"]).first()
 
